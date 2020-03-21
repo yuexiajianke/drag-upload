@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box1" draggable="true" style="width:100px;height:100px;background: red"></div>
+    <div id="box2" draggable="true" style="width:200px;height:200px;background: green;
+    position:absolute;left:400px;top:200px;"></div>
+    <script>
+        let box1 = document.querySelector('#box1')
+        let box2 = document.querySelector('#box2')
+        console.log(box1.ondragstart)
+
+        box1.ondragstart = function (e) {
+            console.log('开始拖拽')
+            e.dataTransfer.setData('text', '#box1')
+        }
+
+        box1.ondrag = function () {
+            console.log('拖拽中...')
+        }
+
+        box2.ondragenter = function () {
+            console.log('dragenter')
+        }
+
+        box2.ondragover = function (e) {
+            // 在放置元素上的dragover事件中阻止默认行为，可以使该元素成为放置
+            e.preventDefault()
+            console.log('dragover')
+        }
+
+        box2.ondragleave = function () {
+            console.log('dragleave')
+        }
+
+        box2.ondrop = function (e) {
+            console.log('drop')
+            let id = e.dataTransfer.getData('text')
+            let el = document.querySelector(id)
+            this.appendChild(el)
+        }
+    </script>
+</body>
+</html>
